@@ -1,0 +1,26 @@
+{
+  "name": "level-commonform-project",
+  "description": "store Common Form projects in a LevelUp-compatible datastore",
+  "version": "0.0.0",
+  "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
+  "dependencies": {
+    "asap": "^2.0.3",
+    "bytewise": "^1.1.0",
+    "is-sha-256-hex-digest": "^1.0.0",
+    "readable-stream": "^2.0.2",
+    "reviewers-edition-parse": "^2.0.5",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "covert": "^1.1.0",
+    "levelup": "^1.2.1",
+    "memdown": "^1.1.0",
+    "tape": "^4.2.1"
+  },
+  "license": "Apache-2.0",
+  "repository": "commonform/level-commonform-project",
+  "scripts": {
+    "coverage": "covert test/*.test.js",
+    "test": "tape test/*.test.js"
+  }
+}
