@@ -11,6 +11,7 @@
     "reviewers-edition-parse": "^2.0.5"
   },
   "devDependencies": {
+    "async-series": "0.0.1",
     "covert": "^1.1.0",
     "levelup": "^1.2.1",
     "memdown": "^1.1.0",
