@@ -15,7 +15,7 @@
 var testStore = require('./store')
 var tape = require('tape')
 
-tape('get nonexistent', function(test) {
+tape('Get Nonexistent Project', function(test) {
   test.plan(2)
   var level = testStore()
   level.getProject('ari', 'nda', '1e', function(error, fetechedForm) {

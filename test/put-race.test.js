@@ -15,7 +15,7 @@
 var testStore = require('./store')
 var tape = require('tape')
 
-tape('race to put a project', function(test) {
+tape('Race to Put a Project', function(test) {
   test.plan(4)
   var level = testStore()
   put(function(error) {

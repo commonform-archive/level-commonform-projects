@@ -16,7 +16,7 @@ var testStore = require('./store')
 var tape = require('tape')
 var series = require('async-series')
 
-tape('get upgrade of project', function(test) {
+tape('Get Upgrade of Project', function(test) {
   test.plan(6)
   var level = testStore()
   series(

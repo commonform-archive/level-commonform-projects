@@ -15,7 +15,7 @@
 var testStore = require('./store')
 var tape = require('tape')
 
-tape('invalid form', function(test) {
+tape('Invalid Form', function(test) {
   test.plan(1)
   var level = testStore()
   level.putProject('ari', 'nda', '1e', 'nonsense', function(error) {

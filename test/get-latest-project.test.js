@@ -16,7 +16,7 @@ var testStore = require('./store')
 var tape = require('tape')
 var series = require('async-series')
 
-tape('get latest edition', function(test) {
+tape('Get Latest Edition', function(test) {
   test.plan(5)
   var level = testStore()
   series(
