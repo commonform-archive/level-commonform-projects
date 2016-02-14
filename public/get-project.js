@@ -16,7 +16,7 @@ var projectKey = require('../private/project-key')
 
 module.exports = function getProject(publisher, project, edition, callback) {
   var key = projectKey(publisher, project, edition)
-  this.levelup.get(key, function(error, data) {
+  this.levelup.get(key, function yieldGot(error, data) {
     if (error) {
       if (error.notFound) {
         callback(null, false) }

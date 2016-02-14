@@ -20,14 +20,14 @@ module.exports = function getPublisherProjects(publisher, callback) {
   this.levelup.createKeyStream(
     { gte: encodeKey([ publisher, null ]),
       lte: encodeKey([ publisher, undefined ]) })
-    .on('data', function(key) {
+    .on('data', function pushDecodedKey(key) {
       keys.push(decodeKey(key)) })
-    .on('error', function(error) {
+    .on('error', function yieldError(error) {
       callback(error) })
-    .on('end', function() {
+    .on('end', function yieldListOfProjects() {
       var projectNames = keys
         .reduce(
-            function(projectNames, key) {
+            function makeListOfProjects(projectNames, key) {
               var projectName = key[1]
               return (
                 ( projectNames.indexOf(projectName) < 0 ) ?

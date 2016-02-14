@@ -21,16 +21,16 @@ module.exports = function getSortedEditions(publisher, project, callback) {
   this.levelup.createReadStream(
     { gte: projectKey(publisher, project, null),
       lte: projectKey(publisher, project, undefined) })
-    .on('data', function(item) {
+    .on('data', function pushToEditions(item) {
       var decodedKey = decode(item.key)
       editions.push(
         { publisher: decodedKey[0],
           project: decodedKey[1],
           edition: decodedKey[2],
           form: item.value }) })
-    .on('error', function(error) {
+    .on('error', function yieldError(error) {
       callback(error) })
-    .on('end', function() {
-      editions.sort(function(a, b) {
+    .on('end', function yieldEditions() {
+      editions.sort(function byEdition(a, b) {
         return compareEdition(a.edition, b.edition) })
       callback(null, editions) }) }

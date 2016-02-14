@@ -13,7 +13,7 @@
 // limitations under the License.
 
 module.exports = function exists(key, callback) {
-  this.levelup.get(key, function(error) {
+  this.levelup.get(key, function yieldWhetherFound(error) {
     if (error) {
       if (error.notFound) {
         callback(null, false) }
