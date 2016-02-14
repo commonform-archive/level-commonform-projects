@@ -1,11 +1,11 @@
-module.exports = LevelCommonFormProject
+module.exports = LevelCommonFormProjects
 
-function LevelCommonFormProject(levelup) {
-  if (!(this instanceof LevelCommonFormProject)) {
-    return new LevelCommonFormProject(levelup) }
+function LevelCommonFormProjects(levelup) {
+  if (!(this instanceof LevelCommonFormProjects)) {
+    return new LevelCommonFormProjects(levelup) }
   this.levelup = levelup }
 
-var prototype = LevelCommonFormProject.prototype
+var prototype = LevelCommonFormProjects.prototype
 
 // Private
 prototype._exists = require('./private/exists')
