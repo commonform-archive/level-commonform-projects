@@ -5,30 +5,24 @@ var series = require('async-series')
 tape('get latest edition', function(test) {
   test.plan(5)
   var level = testStore()
-  var publisher = 'ari'
-  var project = 'nda'
-  var previous = 'a'.repeat(64)
-  var previousEdition = '1e'
-  var latest = 'b'.repeat(64)
-  var latestEdition = '2e1d'
   series(
     [ function(done) {
-        level.putProject(publisher, project, previousEdition, previous, function(error) {
+        level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
           test.ifError(error, 'no putProject() error')
           done() }) },
       function(done) {
-        level.putProject(publisher, project, latestEdition, latest, function(error) {
+        level.putProject('ari', 'nda', '2e1d', 'b'.repeat(64), function(error) {
           test.ifError(error, 'no putProject() error')
           done() }) },
       function(done) {
-        level.getLatestEdition(publisher, project, function(error, fetchedData) {
+        level.getLatestEdition('ari', 'nda', function(error, fetchedData) {
           test.ifError(error, 'no getLatestEdition() error')
           test.same(
             fetchedData,
-            { publisher: publisher,
-              project: project,
-              edition: latestEdition,
-              form: latest },
+            { publisher: 'ari',
+              project: 'nda',
+              edition: '2e1d',
+              form: 'b'.repeat(64) },
             'getLatestEdition() yields latest edition') })
         done() } ],
     function(error) {
