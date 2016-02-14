@@ -2,6 +2,7 @@ module.exports = putProject
 
 var asap = require('asap')
 var isDigest = require('is-sha-256-hex-digest')
+var lock = require('level-lock')
 var projectKey = require('../private/project-key')
 var parseEdition = require('reviewers-edition-parse')
 
@@ -25,14 +26,21 @@ function putProject(publisher, project, edition, data, callback) {
 
   var key = projectKey(publisher, project, edition)
   var levelup = this.levelup
-  this._exists(key, function(error, exists) {
-    if (error) {
-      callback(error) }
-    else {
-      if (exists) {
-        callback(new Error('Already exists')) }
+  var unlock = lock(levelup, key, 'w')
+  if (!unlock) {
+    callback(new Error('Already exists')) }
+  else {
+    this._exists(key, function(error, exists) {
+      if (error) {
+        callback(error) }
       else {
-        levelup.put(key, data, callback) } } }) }
+        if (exists) {
+          unlock()
+          callback(new Error('Already exists')) }
+        else {
+          levelup.put(key, data, function(error) {
+            unlock()
+            callback(error) }) } } }) } }
 
 function validForm(argument) {
   return isDigest(argument) }

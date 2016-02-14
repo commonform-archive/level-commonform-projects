@@ -7,6 +7,7 @@
     "asap": "^2.0.3",
     "bytewise": "^1.1.0",
     "is-sha-256-hex-digest": "^1.0.0",
+    "level-lock": "^1.0.1",
     "reviewers-edition-compare": "^1.0.4",
     "reviewers-edition-parse": "^2.0.5",
     "reviewers-edition-upgrade": "^1.0.1"
