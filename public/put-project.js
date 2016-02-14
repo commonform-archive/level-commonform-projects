@@ -32,6 +32,7 @@ function putProject(publisher, project, edition, data, callback) {
   else {
     this._exists(key, function(error, exists) {
       if (error) {
+        unlock()
         callback(error) }
       else {
         if (exists) {
