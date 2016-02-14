@@ -13,8 +13,8 @@
 // limitations under the License.
 
 var levelup = require('levelup')
-var lvf = require('..')
+var levelCommonFormProjects = require('..')
 var memdown = require('memdown')
 
 module.exports = function testStore() {
-  return lvf(levelup({ db: memdown })) }
+  return levelCommonFormProjects(levelup({ db: memdown })) }
