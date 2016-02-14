@@ -74,7 +74,12 @@ prototype.getProject = function(publisher, project, edition, callback) {
       else {
         callback(error) } }
     else {
-      callback(null, data) } }) }
+      var result = {
+        publisher: publisher,
+        project: project,
+        edition: edition,
+        form: data }
+      callback(null, result) } }) }
 
 prototype.getCurrentEdition = function(publisher, project, callback) {
   var editions = [ ]
