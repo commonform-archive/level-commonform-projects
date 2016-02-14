@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = projectKey
-
 var encodeKey = require('./encode-key')
 
-function projectKey(publisher, project, edition) {
+module.exports = function projectKey(publisher, project, edition) {
   return encodeKey([ publisher, project, edition ]) }

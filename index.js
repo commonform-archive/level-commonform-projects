@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = LevelCommonFormProjects
-
-function LevelCommonFormProjects(levelup) {
+module.exports = function LevelCommonFormProjects(levelup) {
   if (!(this instanceof LevelCommonFormProjects)) {
     return new LevelCommonFormProjects(levelup) }
   this.levelup = levelup }
 
-var prototype = LevelCommonFormProjects.prototype
+var prototype = module.exports.prototype
 
 // Private
 prototype._exists = require('./private/exists')

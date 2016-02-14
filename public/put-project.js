@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = putProject
-
 var asap = require('asap')
 var isDigest = require('is-sha-256-hex-digest')
 var lock = require('level-lock')
 var projectKey = require('../private/project-key')
 var parseEdition = require('reviewers-edition-parse')
 
-function putProject(publisher, project, edition, data, callback) {
+module.exports = function putProject(publisher, project, edition, data, callback) {
   var parsedEdition = parseEdition(edition)
   if (parsedEdition === false) {
     return asap(function() {

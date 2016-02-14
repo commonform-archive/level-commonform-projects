@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = getSortedEditions
-
 var compareEdition = require('reviewers-edition-compare')
 var decode = require('bytewise/encoding/hex').decode
 var projectKey = require('./project-key')
 
-function getSortedEditions(publisher, project, callback) {
+module.exports = function getSortedEditions(publisher, project, callback) {
   var editions = [ ]
   this.levelup.createReadStream(
     { gte: projectKey(publisher, project, null),

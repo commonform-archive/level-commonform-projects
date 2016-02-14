@@ -12,11 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = getProject
-
 var projectKey = require('../private/project-key')
 
-function getProject(publisher, project, edition, callback) {
+module.exports = function getProject(publisher, project, edition, callback) {
   var key = projectKey(publisher, project, edition)
   this.levelup.get(key, function(error, data) {
     if (error) {

@@ -12,11 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = getUpgrade
-
 var editionUpgrade = require('reviewers-edition-upgrade')
 
-function getUpgrade(publisher, project, using, callback) {
+module.exports = function getUpgrade(publisher, project, using, callback) {
   this._getSortedEditions(publisher, project, function(error, editions) {
     if (error) {
       callback(error) }

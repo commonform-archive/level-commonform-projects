@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = getLatestEdition
-
-function getLatestEdition(publisher, project, callback) {
+module.exports = function getLatestEdition(publisher, project, callback) {
   this._getSortedEditions(publisher, project, function(error, editions) {
     if (error) {
       callback(error) }

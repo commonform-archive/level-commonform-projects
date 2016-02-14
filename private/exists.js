@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = exists
-
-function exists(key, callback) {
+module.exports = function exists(key, callback) {
   this.levelup.get(key, function(error) {
     if (error) {
       if (error.notFound) {

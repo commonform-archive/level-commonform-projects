@@ -12,12 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = getPublisherProjects
-
 var decodeKey = require('../private/decode-key')
 var encodeKey = require('../private/encode-key')
 
-function getPublisherProjects(publisher, callback) {
+module.exports = function getPublisherProjects(publisher, callback) {
   var keys = [ ]
   this.levelup.createKeyStream(
     { gte: encodeKey([ publisher, null ]),
