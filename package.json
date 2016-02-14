@@ -1,5 +1,5 @@
 {
-  "name": "level-commonform-project",
+  "name": "level-commonform-projects",
   "description": "store Common Form projects in a LevelUp-compatible datastore",
   "version": "0.0.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (https://kemitchell.com/)",
@@ -19,7 +19,7 @@
     "tape": "^4.2.1"
   },
   "license": "Apache-2.0",
-  "repository": "commonform/level-commonform-project",
+  "repository": "commonform/level-commonform-projects",
   "scripts": {
     "coverage": "covert test/*.test.js",
     "test": "tape test/*.test.js"
