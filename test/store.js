@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+module.exports = testStore
+
 var levelup = require('levelup')
 var levelCommonFormProjects = require('..')
 var memdown = require('memdown')
 
-module.exports = function testStore() {
+function testStore() {
   return levelCommonFormProjects(levelup({ db: memdown })) }
