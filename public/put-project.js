@@ -28,7 +28,8 @@ function putProject(publisher, project, edition, data, callback) {
   var levelup = this.levelup
   var unlock = lock(levelup, key, 'w')
   if (!unlock) {
-    callback(new Error('Already exists')) }
+    asap(function() {
+      callback(new Error('Already exists')) }) }
   else {
     this._exists(key, function(error, exists) {
       if (error) {
@@ -49,7 +50,7 @@ function validForm(argument) {
 function validPublisher(argument) {
   return (
     ( typeof argument === 'string' ) &&
-    argument.length > 0 &&
+    ( argument.length > 0 ) &&
     /^[a-z]+$/.test(argument) ) }
 
 function validProject(argument) {
