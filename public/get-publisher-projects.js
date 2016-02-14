@@ -18,8 +18,10 @@ var encodeKey = require('../private/encode-key')
 module.exports = function getPublisherProjects(publisher, callback) {
   var keys = [ ]
   this.levelup.createKeyStream(
-    { gte: encodeKey([ publisher, null ]),
-      lte: encodeKey([ publisher, undefined ]) })
+    { // In bytewise's ordering, null is the lowest-ranked value.
+      gt: encodeKey([ publisher, null ]),
+      // In bytewise's ordering, undefined is the highest-ranked value.
+      lt: encodeKey([ publisher, undefined ]) })
     .on('data', function pushDecodedKey(key) {
       keys.push(decodeKey(key)) })
     .on('error', function yieldError(error) {

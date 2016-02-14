@@ -19,8 +19,10 @@ var projectKey = require('./project-key')
 module.exports = function getSortedEditions(publisher, project, callback) {
   var editions = [ ]
   this.levelup.createReadStream(
-    { gte: projectKey(publisher, project, null),
-      lte: projectKey(publisher, project, undefined) })
+    { // In bytewise's ordering, null is the lowest-ranked value.
+      gt: projectKey(publisher, project, null),
+      // In bytewise's ordering, undefined is the highest-ranked value.
+      lt: projectKey(publisher, project, undefined) })
     .on('data', function pushToEditions(item) {
       var decodedKey = decode(item.key)
       editions.push(
