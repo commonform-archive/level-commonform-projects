@@ -21,4 +21,6 @@ tape('Put Existing Edition', function(test) {
   level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
     test.ifError(error, 'no putProject() error')
     level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
-      test.same(error.message, 'Already exists') }) }) })
+      test.same(
+        error.message, 'Already exists',
+        'calls back with an error') }) }) })

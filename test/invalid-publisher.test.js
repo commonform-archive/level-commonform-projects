@@ -19,4 +19,6 @@ tape('Invalid Publisher', function(test) {
   test.plan(1)
   var level = testStore()
   level.putProject(null, 'nda', '1e', 'a'.repeat(64), function(error) {
-    test.same(error.message, 'Invalid publisher name') }) })
+    test.same(
+      error.message, 'Invalid publisher name',
+      'calls back with an error') }) })
