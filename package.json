@@ -8,6 +8,7 @@
     "bytewise": "^1.1.0",
     "is-sha-256-hex-digest": "^1.0.0",
     "readable-stream": "^2.0.2",
+    "reviewers-edition-compare": "^1.0.4",
     "reviewers-edition-parse": "^2.0.5",
     "through2": "^2.0.0"
   },

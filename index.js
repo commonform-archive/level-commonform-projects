@@ -1,6 +1,8 @@
 module.exports = LevelCommonFormProject
 
 var asap = require('asap')
+var compareEdition = require('reviewers-edition-compare')
+var decode = require('bytewise/encoding/hex').decode
 var encode = require('bytewise/encoding/hex').encode
 var isDigest = require('is-sha-256-hex-digest')
 var parseEdition = require('reviewers-edition-parse')
@@ -73,6 +75,28 @@ prototype.getProject = function(publisher, project, edition, callback) {
         callback(error) } }
     else {
       callback(null, data) } }) }
+
+prototype.getCurrentEdition = function(publisher, project, callback) {
+  var editions = [ ]
+  this.levelup.createReadStream({
+    gte: projectKey(publisher, project, null),
+    lte: projectKey(publisher, project, undefined) })
+    .on('data', function(item) {
+      var decodedKey = decode(item.key)
+      editions.push({
+        publisher: decodedKey[0],
+        project: decodedKey[1],
+        edition: decodedKey[2],
+        form: item.value }) })
+    .on('error', function(error) {
+      callback(error) })
+    .on('end', function() {
+      editions = editions
+        .sort(function(a, b) {
+          return compareEdition(a.edition, b.edition) })
+        .filter(function(element) {
+          return !parseEdition(element.edition).hasOwnProperty('draft') })
+      callback(null, editions[editions.length - 1]) }) }
 
 function projectKey(publisher, project, edition) {
   return encode([ publisher, project, edition ]) }
