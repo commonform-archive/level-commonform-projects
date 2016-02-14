@@ -7,13 +7,10 @@
     "asap": "^2.0.3",
     "bytewise": "^1.1.0",
     "is-sha-256-hex-digest": "^1.0.0",
-    "readable-stream": "^2.0.2",
     "reviewers-edition-compare": "^1.0.4",
-    "reviewers-edition-parse": "^2.0.5",
-    "through2": "^2.0.0"
+    "reviewers-edition-parse": "^2.0.5"
   },
   "devDependencies": {
-    "async-series": "0.0.1",
     "covert": "^1.1.0",
     "levelup": "^1.2.1",
     "memdown": "^1.1.0",
