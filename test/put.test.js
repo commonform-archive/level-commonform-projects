@@ -9,5 +9,5 @@ tape('put a project', function(test) {
   var edition = '1e'
   var data = 'a'.repeat(64)
   level.putProject(publisher, project, edition, data, function(error) {
-    test.ifError(error) }) })
+    test.ifError(error, 'no error') }) })
 
