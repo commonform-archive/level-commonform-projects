@@ -103,5 +103,25 @@ prototype.getCurrentEdition = function(publisher, project, callback) {
           return !parseEdition(element.edition).hasOwnProperty('draft') })
       callback(null, editions[editions.length - 1]) }) }
 
+prototype.getLatestEdition = function(publisher, project, callback) {
+  var editions = [ ]
+  this.levelup.createReadStream({
+    gte: projectKey(publisher, project, null),
+    lte: projectKey(publisher, project, undefined) })
+    .on('data', function(item) {
+      var decodedKey = decode(item.key)
+      editions.push({
+        publisher: decodedKey[0],
+        project: decodedKey[1],
+        edition: decodedKey[2],
+        form: item.value }) })
+    .on('error', function(error) {
+      callback(error) })
+    .on('end', function() {
+      editions = editions
+        .sort(function(a, b) {
+          return compareEdition(a.edition, b.edition) })
+      callback(null, editions[editions.length - 1]) }) }
+
 function projectKey(publisher, project, edition) {
   return encode([ publisher, project, edition ]) }
