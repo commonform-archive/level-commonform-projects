@@ -1,15 +1,15 @@
 module.exports = getPublisherProjects
 
-var decode = require('bytewise/encoding/hex').decode
-var encode = require('bytewise/encoding/hex').encode
+var decodeKey = require('../private/decode-key')
+var encodeKey = require('../private/encode-key')
 
 function getPublisherProjects(publisher, callback) {
   var keys = [ ]
   this.levelup.createKeyStream(
-    { gte: encode([ publisher, null ]),
-      lte: encode([ publisher, undefined ]) })
+    { gte: encodeKey([ publisher, null ]),
+      lte: encodeKey([ publisher, undefined ]) })
     .on('data', function(key) {
-      keys.push(decode(key)) })
+      keys.push(decodeKey(key)) })
     .on('error', function(error) {
       callback(error) })
     .on('end', function() {

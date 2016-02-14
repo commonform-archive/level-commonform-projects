@@ -1,6 +1,6 @@
 module.exports = projectKey
 
-var encode = require('bytewise/encoding/hex').encode
+var encodeKey = require('./encode-key')
 
 function projectKey(publisher, project, edition) {
-  return encode([ publisher, project, edition ]) }
+  return encodeKey([ publisher, project, edition ]) }
