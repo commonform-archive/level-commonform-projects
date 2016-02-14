@@ -8,7 +8,8 @@
     "bytewise": "^1.1.0",
     "is-sha-256-hex-digest": "^1.0.0",
     "reviewers-edition-compare": "^1.0.4",
-    "reviewers-edition-parse": "^2.0.5"
+    "reviewers-edition-parse": "^2.0.5",
+    "reviewers-edition-upgrade": "^1.0.1"
   },
   "devDependencies": {
     "async-series": "0.0.1",
