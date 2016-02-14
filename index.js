@@ -30,7 +30,7 @@ prototype.putProject = function(publisher, project, edition, data, callback) {
     return asap(function() {
       callback(new Error('Invalid project data')) }) }
 
-  var key = encode([ publisher, project, edition ])
+  var key = projectKey(publisher, project, edition)
   var levelup = this.levelup
   this.exists(key, function(error, exists) {
     if (error) {
@@ -62,3 +62,17 @@ function validPublisher(argument) {
 
 function validProject(argument) {
   return validPublisher(argument) }
+
+prototype.getProject = function(publisher, project, edition, callback) {
+  var key = projectKey(publisher, project, edition)
+  this.levelup.get(key, function(error, data) {
+    if (error) {
+      if (error.notFound) {
+        callback(null, false) }
+      else {
+        callback(error) } }
+    else {
+      callback(null, data) } }) }
+
+function projectKey(publisher, project, edition) {
+  return encode([ publisher, project, edition ]) }
