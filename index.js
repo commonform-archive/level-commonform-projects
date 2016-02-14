@@ -18,7 +18,7 @@ prototype.putProject = function(publisher, project, edition, data, callback) {
   var parsedEdition = parseEdition(edition)
   if (parsedEdition === false) {
     return asap(function() {
-      callback(new Error('Invalid Reviewers Edition')) }) }
+      callback(new Error('Invalid edition')) }) }
 
   if (!validPublisher(publisher)) {
     return asap(function() {
