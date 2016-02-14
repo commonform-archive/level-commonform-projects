@@ -28,9 +28,9 @@ prototype.putProject = function(publisher, project, edition, data, callback) {
     return asap(function() {
       callback(new Error('Invalid project name')) }) }
 
-  if (!validData(data)) {
+  if (!validForm(data)) {
     return asap(function() {
-      callback(new Error('Invalid project data')) }) }
+      callback(new Error('Invalid form')) }) }
 
   var key = projectKey(publisher, project, edition)
   var levelup = this.levelup
@@ -53,7 +53,7 @@ prototype.exists = function(key, callback) {
     else {
       callback(null, true) } }) }
 
-function validData(argument) {
+function validForm(argument) {
   return isDigest(argument) }
 
 function validPublisher(argument) {
