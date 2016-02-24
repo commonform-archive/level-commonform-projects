@@ -13,9 +13,10 @@
 // limitations under the License.
 
 var asap = require('asap')
+var makeFormKey = require('../private/form-key')
 var isDigest = require('is-sha-256-hex-digest')
 var lock = require('level-lock')
-var projectKey = require('../private/project-key')
+var makeProjectKey = require('../private/project-key')
 var parseEdition = require('reviewers-edition-parse')
 
 module.exports = function putProject(publisher, project, edition, data, callback) {
@@ -36,14 +37,14 @@ module.exports = function putProject(publisher, project, edition, data, callback
     return asap(function() {
       callback(new Error('Invalid form')) }) }
 
-  var key = projectKey(publisher, project, edition)
+  var projectKey = makeProjectKey(publisher, project, edition)
   var levelup = this.levelup
-  var unlock = lock(levelup, key, 'w')
+  var unlock = lock(levelup, projectKey, 'w')
   if (!unlock) {
     asap(function() {
       callback(new Error('Already exists')) }) }
   else {
-    this._exists(key, function(error, exists) {
+    this._exists(projectKey, function(error, exists) {
       if (error) {
         unlock()
         callback(error) }
@@ -52,9 +53,18 @@ module.exports = function putProject(publisher, project, edition, data, callback
           unlock()
           callback(new Error('Already exists')) }
         else {
-          levelup.put(key, data, function(error) {
-            unlock()
-            callback(error) }) } } }) } }
+          var formKey = makeFormKey(data, publisher, project, edition)
+          levelup
+            .batch()
+            .put(formKey, JSON.stringify(
+              { publisher: publisher,
+                project: project,
+                edition: edition,
+                form: data }))
+            .put(projectKey, data)
+            .write(function(error) {
+              unlock()
+              callback(error) }) } } }) } }
 
 function validForm(argument) {
   return isDigest(argument) }

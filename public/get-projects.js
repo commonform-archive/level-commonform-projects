@@ -14,25 +14,37 @@
 
 var compareEdition = require('reviewers-edition-compare')
 var decode = require('bytewise/encoding/hex').decode
-var makeProjectKey = require('./project-key')
+var makeFormKey = require('../private/form-key')
 
-module.exports = function getSortedEditions(publisher, project, callback) {
-  var editions = [ ]
+module.exports = function getProjects(form, callback) {
+  var projects = [ ]
   this.levelup.createReadStream(
     { // In bytewise's ordering, null is the lowest-ranked value.
-      gt: makeProjectKey(publisher, project, null),
+      gt: makeFormKey(form, null, null, null),
       // In bytewise's ordering, undefined is the highest-ranked value.
-      lt: makeProjectKey(publisher, project, undefined) })
-    .on('data', function pushToEditions(item) {
+      lt: makeFormKey(form, undefined, undefined, undefined) })
+    .on('data', function pushToProjects(item) {
       var decodedKey = decode(item.key)
-      editions.push(
-        { publisher: decodedKey[0],
-          project: decodedKey[1],
-          edition: decodedKey[2],
-          form: item.value }) })
+      projects.push(
+        { form: decodedKey[0],
+          publisher: decodedKey[1],
+          project: decodedKey[2],
+          edition: decodedKey[3] }) })
     .on('error', function yieldError(error) {
       callback(error) })
-    .on('end', function yieldEditions() {
-      editions.sort(function byEdition(a, b) {
-        return compareEdition(a.edition, b.edition) })
-      callback(null, editions) }) }
+    .on('end', function yieldProjects() {
+      projects.sort(compareProjects)
+      callback(null, projects) }) }
+
+function compareProjects(a, b) {
+  if (a.publisher < b.publisher) {
+    return -1 }
+  else if (a.publisher > b.publisher) {
+    return 1 }
+  else {
+    if (a.project < b.project) {
+      return -1 }
+    else if (a.project > b.project) {
+      return 1 }
+    else {
+      return compareEdition(a.edition, b.edition) } } }

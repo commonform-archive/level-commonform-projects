@@ -12,20 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var makeProjectKey = require('../private/project-key')
+var encodeKey = require('./encode-key')
 
-module.exports = function getProject(publisher, project, edition, callback) {
-  var key = makeProjectKey(publisher, project, edition)
-  this.levelup.get(key, function yieldGot(error, data) {
-    if (error) {
-      if (error.notFound) {
-        callback(null, false) }
-      else {
-        callback(error) } }
-    else {
-      var result = {
-        publisher: publisher,
-        project: project,
-        edition: edition,
-        form: data }
-      callback(null, result) } }) }
+module.exports = function formKey(form, publisher, project, edition) {
+  return encodeKey([ form, publisher, project, edition ]) }
