@@ -71,13 +71,13 @@ function validForm(argument) {
   return isDigest(argument) }
 
 function validPublisher(argument) {
-  return nonEmptyAlphaString(argument) }
-
-function validProject(argument) {
-  return nonEmptyAlphaString(argument) }
-
-function nonEmptyAlphaString(argument) {
   return (
     ( typeof argument === 'string' ) &&
     ( argument.length > 0 ) &&
     /^[a-z]+$/.test(argument) ) }
+
+function validProject(argument) {
+  return (
+    ( typeof argument === 'string' ) &&
+    ( argument.length > 0 ) &&
+    /^[a-z-]+$/.test(argument) ) }

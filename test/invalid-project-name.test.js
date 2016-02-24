@@ -23,3 +23,9 @@ tape('Invalid Project', function(test) {
     test.same(
       error.message, 'Invalid project name',
       'calls back with an error') }) })
+
+tape('Project name with dashes', function(test) {
+  test.plan(1)
+  var level = testStore()
+  level.putProject('ari', 'ugly-nda', '1e', 'a'.repeat(64), function(error) {
+    test.ifError(error) }) })
