@@ -29,3 +29,11 @@ tape('Project name with dashes', function(test) {
   var level = testStore()
   level.putProject('ari', 'ugly-nda', '1e', 'a'.repeat(64), function(error) {
     test.ifError(error) }) })
+
+tape('Zero-length project name', function(test) {
+  test.plan(1)
+  var level = testStore()
+  level.putProject('ari', '', '1e', 'a'.repeat(64), function(error) {
+    test.same(
+      error.message, 'Invalid project name',
+      'calls back with an error') }) })

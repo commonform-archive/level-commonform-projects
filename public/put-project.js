@@ -73,11 +73,9 @@ function validForm(argument) {
 function validPublisher(argument) {
   return (
     ( typeof argument === 'string' ) &&
-    ( argument.length > 0 ) &&
     /^[a-z]+$/.test(argument) ) }
 
 function validProject(argument) {
   return (
     ( typeof argument === 'string' ) &&
-    ( argument.length > 0 ) &&
     /^[a-z-]+$/.test(argument) ) }
