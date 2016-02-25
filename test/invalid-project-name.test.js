@@ -30,6 +30,12 @@ tape('Project name with dashes', function(test) {
   level.putProject('ari', 'ugly-nda', '1e', 'a'.repeat(64), function(error) {
     test.ifError(error) }) })
 
+tape('Project name with digits', function(test) {
+  test.plan(1)
+  var level = testStore()
+  level.putProject('ari', '101-nda', '1e', 'a'.repeat(64), function(error) {
+    test.ifError(error) }) })
+
 tape('Zero-length project name', function(test) {
   test.plan(1)
   var level = testStore()
