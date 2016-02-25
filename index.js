@@ -27,6 +27,7 @@ prototype._getSortedEditions = require('./private/get-sorted-editions')
 // Public
 prototype.getCurrentEdition = require('./public/get-current-edition')
 prototype.getLatestEdition = require('./public/get-latest-edition')
+prototype.getEditions = require('./public/get-editions')
 prototype.getProject = require('./public/get-project')
 prototype.getProjects = require('./public/get-projects')
 prototype.getPublisherProjects = require('./public/get-publisher-projects')
