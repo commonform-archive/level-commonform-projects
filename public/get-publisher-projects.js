@@ -14,15 +14,15 @@
  */
 
 var decodeKey = require('../private/decode-key')
-var encodeKey = require('../private/encode-key')
+var makeProjectKey = require('../private/project-key')
 
 module.exports = function getPublisherProjects(publisher, callback) {
   var keys = [ ]
   this.levelup.createKeyStream(
     { // In bytewise's ordering, null is the lowest-ranked value.
-      gt: encodeKey([ publisher, null ]),
+      gt: makeProjectKey(publisher, null, null),
       // In bytewise's ordering, undefined is the highest-ranked value.
-      lt: encodeKey([ publisher, undefined ]) })
+      lt: makeProjectKey(publisher, undefined, undefined) })
     .on('data', function pushDecodedKey(key) {
       keys.push(decodeKey(key)) })
     .on('error', function yieldError(error) {
@@ -31,7 +31,7 @@ module.exports = function getPublisherProjects(publisher, callback) {
       var projectNames = keys
         .reduce(
             function makeListOfProjects(projectNames, key) {
-              var projectName = key[1]
+              var projectName = key[2]
               return (
                 ( projectNames.indexOf(projectName) < 0 ) ?
                   projectNames.concat(projectName) :

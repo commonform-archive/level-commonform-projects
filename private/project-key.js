@@ -16,4 +16,4 @@
 var encodeKey = require('./encode-key')
 
 module.exports = function projectKey(publisher, project, edition) {
-  return encodeKey([ publisher, project, edition ]) }
+  return encodeKey([ 'project', publisher, project, edition ]) }

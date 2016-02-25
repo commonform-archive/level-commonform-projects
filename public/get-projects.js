@@ -14,7 +14,7 @@
  */
 
 var compareEdition = require('reviewers-edition-compare')
-var decode = require('bytewise/encoding/hex').decode
+var decodeKey = require('bytewise/encoding/hex').decode
 var makeFormKey = require('../private/form-key')
 
 module.exports = function getProjects(form, callback) {
@@ -25,12 +25,12 @@ module.exports = function getProjects(form, callback) {
       // In bytewise's ordering, undefined is the highest-ranked value.
       lt: makeFormKey(form, undefined, undefined, undefined) })
     .on('data', function pushToProjects(item) {
-      var decodedKey = decode(item.key)
+      var decodedKey = decodeKey(item.key)
       projects.push(
-        { form: decodedKey[0],
-          publisher: decodedKey[1],
-          project: decodedKey[2],
-          edition: decodedKey[3] }) })
+        { form: decodedKey[1],
+          publisher: decodedKey[2],
+          project: decodedKey[3],
+          edition: decodedKey[4] }) })
     .on('error', function yieldError(error) {
       callback(error) })
     .on('end', function yieldProjects() {

@@ -27,9 +27,9 @@ module.exports = function getSortedEditions(publisher, project, callback) {
     .on('data', function pushToEditions(item) {
       var decodedKey = decode(item.key)
       editions.push(
-        { publisher: decodedKey[0],
-          project: decodedKey[1],
-          edition: decodedKey[2],
+        { publisher: decodedKey[1],
+          project: decodedKey[2],
+          edition: decodedKey[3],
           form: item.value }) })
     .on('error', function yieldError(error) {
       callback(error) })
