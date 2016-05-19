@@ -46,7 +46,7 @@ tape('Get Upgrade of Project', function(test) {
             { publisher: 'ari',
               project: 'nda',
               edition: '1e7c',
-              form: formADigest },
+              digest: formADigest },
             'getUpgrade() yields expected edition') })
         done() } ],
     function(error) {

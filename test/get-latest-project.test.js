@@ -41,7 +41,7 @@ tape('Get Latest Edition', function(test) {
             { publisher: 'ari',
               project: 'nda',
               edition: '2e1d',
-              form: formBDigest },
+              digest: formBDigest },
             'getLatestEdition() yields latest edition') })
         done() } ],
     function(error) {

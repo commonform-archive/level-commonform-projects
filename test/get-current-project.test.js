@@ -41,7 +41,7 @@ tape('Get Current Project', function(test) {
             { publisher: 'ari',
               project: 'nda',
               edition: '1e1u',
-              form: formBDigest },
+              digest: formBDigest },
             'getCurrentEdition() yields current edition') })
         done() } ],
     function(error) {

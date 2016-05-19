@@ -30,7 +30,7 @@ module.exports = function getSortedEditions(publisher, project, callback) {
         { publisher: decodedKey[1],
           project: decodedKey[2],
           edition: decodedKey[3],
-          form: item.value }) })
+          digest: item.value }) })
     .on('error', function yieldError(error) {
       callback(error) })
     .on('end', function yieldEditions() {
