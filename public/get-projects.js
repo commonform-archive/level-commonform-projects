@@ -17,20 +17,21 @@ var compareEdition = require('reviewers-edition-compare')
 var decodeKey = require('bytewise/encoding/hex').decode
 var makeFormKey = require('../private/form-key')
 
-module.exports = function getProjects(form, callback) {
+module.exports = function getProjects(digest, callback) {
   var projects = [ ]
   this.levelup.createReadStream(
     { // In bytewise's ordering, null is the lowest-ranked value.
-      gt: makeFormKey(form, null, null, null),
+      gt: makeFormKey(digest, null),
       // In bytewise's ordering, undefined is the highest-ranked value.
-      lt: makeFormKey(form, undefined, undefined, undefined) })
+      lt: makeFormKey(digest, undefined) })
     .on('data', function pushToProjects(item) {
       var decodedKey = decodeKey(item.key)
       projects.push(
-        { form: decodedKey[1],
+        { digest: decodedKey[1],
           publisher: decodedKey[2],
           project: decodedKey[3],
-          edition: decodedKey[4] }) })
+          edition: decodedKey[4],
+          root: decodedKey[5] }) })
     .on('error', function yieldError(error) {
       callback(error) })
     .on('end', function yieldProjects() {

@@ -58,17 +58,13 @@ module.exports = function putProject(publisher, project, edition, form, callback
           var normalized = normalize(form)
           var root = normalized.root
           var digests = Object.keys(normalized)
-            .filter(function(key) { return key !== 'root' })
+            .filter(function(key) { return ( key !== 'root' ) })
           var batch = levelup.batch()
           batch.put(projectKey, root)
           digests.forEach(function(digest) {
-            batch.put(
-              makeFormKey(digest, publisher, project, edition),
-              { publisher: publisher,
-                project: project,
-                edition: edition,
-                root: ( digest === root ),
-                digest: digest }) })
+            var isRoot = ( digest === root )
+            var formKey = makeFormKey(digest, publisher, project, edition, isRoot)
+            batch.put(formKey, null) })
           batch.write(function(error) {
             unlock()
             callback(error) }) } } }) } }

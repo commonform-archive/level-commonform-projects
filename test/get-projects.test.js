@@ -40,12 +40,49 @@ tape('Get Projects for Form', function(test) {
             [ { publisher: 'ari',
                 project: 'nda',
                 edition: '1e',
-                form: digest },
+                root: true,
+                digest: digest },
               { publisher: 'ben',
                 project: 'nda',
                 edition: '2e',
-                form: digest } ],
+                root: true,
+                digest: digest } ],
             'getProjects() lists matching project') })
+        done() } ],
+    function(error) {
+      test.ifError(error, 'no series error') }) })
+
+tape('Get Projects for Child Form', function(test) {
+  test.plan(5)
+  var level = testStore()
+  var child = { content: [ 'A test form' ] }
+  var parent = { content: [ { form: child } ] }
+  var childDigest = normalize(child).root
+  series(
+    [ function(done) {
+        level.putProject('ari', 'nda', '1e', parent, function(error) {
+          test.ifError(error, 'no putProject() error')
+          done() }) },
+      function(done) {
+        level.putProject('ben', 'nda', '2e', parent, function(error) {
+          test.ifError(error, 'no putProject() error')
+          done() }) },
+      function(done) {
+        level.getProjects(childDigest, function(error, fetchedData) {
+          test.ifError(error, 'no getProjects() error')
+          test.same(
+            fetchedData,
+            [ { publisher: 'ari',
+                project: 'nda',
+                edition: '1e',
+                root: false,
+                digest: childDigest },
+              { publisher: 'ben',
+                project: 'nda',
+                edition: '2e',
+                root: false,
+                digest: childDigest } ],
+            'getProjects() lists containing project') })
         done() } ],
     function(error) {
       test.ifError(error, 'no series error') }) })

@@ -15,5 +15,5 @@
 
 var encodeKey = require('./encode-key')
 
-module.exports = function formKey(form, publisher, project, edition) {
-  return encodeKey([ 'form', form, publisher, project, edition ]) }
+module.exports = function formKey(form, publisher, project, edition, root) {
+  return encodeKey([ 'form', form, publisher, project, edition, root ]) }
