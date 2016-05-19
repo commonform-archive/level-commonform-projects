@@ -64,7 +64,12 @@ module.exports = function putProject(publisher, project, edition, form, callback
           digests.forEach(function(digest) {
             var isRoot = ( digest === root )
             var formKey = makeFormKey(digest, publisher, project, edition, isRoot)
-            batch.put(formKey, null) })
+            batch.put(formKey,
+              { publisher: publisher,
+                project: project,
+                edition: edition,
+                root: ( digest === root ),
+                digest: digest }) })
           batch.write(function(error) {
             unlock()
             callback(error) }) } } }) } }
