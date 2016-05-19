@@ -19,9 +19,10 @@ var tape = require('tape')
 tape('Put Existing Edition', function(test) {
   test.plan(2)
   var level = testStore()
-  level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
+  var form = { content: [ 'A test form' ] }
+  level.putProject('ari', 'nda', '1e', form, function(error) {
     test.ifError(error, 'no putProject() error')
-    level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
+    level.putProject('ari', 'nda', '1e', form, function(error) {
       test.same(
         error.message, 'Already exists',
         'calls back with an error') }) }) })

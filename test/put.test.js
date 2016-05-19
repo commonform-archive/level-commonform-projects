@@ -19,5 +19,6 @@ var tape = require('tape')
 tape('Put a Project', function(test) {
   test.plan(1)
   var level = testStore()
-  level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
+  var form = { content: [ 'A test form' ] }
+  level.putProject('ari', 'nda', '1e', form, function(error) {
     test.ifError(error, 'no error') }) })

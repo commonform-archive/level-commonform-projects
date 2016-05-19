@@ -19,7 +19,8 @@ var tape = require('tape')
 tape('Invalid Project', function(test) {
   test.plan(1)
   var level = testStore()
-  level.putProject('ari', null, '1e', 'a'.repeat(64), function(error) {
+  var form = { content: [ 'A test form' ] }
+  level.putProject('ari', null, '1e', form, function(error) {
     test.same(
       error.message, 'Invalid project name',
       'calls back with an error') }) })
@@ -27,19 +28,22 @@ tape('Invalid Project', function(test) {
 tape('Project name with dashes', function(test) {
   test.plan(1)
   var level = testStore()
-  level.putProject('ari', 'ugly-nda', '1e', 'a'.repeat(64), function(error) {
+  var form = { content: [ 'A test form' ] }
+  level.putProject('ari', 'ugly-nda', '1e', form, function(error) {
     test.ifError(error) }) })
 
 tape('Project name with digits', function(test) {
   test.plan(1)
   var level = testStore()
-  level.putProject('ari', '101-nda', '1e', 'a'.repeat(64), function(error) {
+  var form = { content: [ 'A test form' ] }
+  level.putProject('ari', '101-nda', '1e', form, function(error) {
     test.ifError(error) }) })
 
 tape('Zero-length project name', function(test) {
   test.plan(1)
   var level = testStore()
-  level.putProject('ari', '', '1e', 'a'.repeat(64), function(error) {
+  var form = { content: [ 'A test form' ] }
+  level.putProject('ari', '', '1e', form, function(error) {
     test.same(
       error.message, 'Invalid project name',
       'calls back with an error') }) })

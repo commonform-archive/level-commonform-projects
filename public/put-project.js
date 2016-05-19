@@ -15,12 +15,13 @@
 
 var asap = require('asap')
 var makeFormKey = require('../private/form-key')
-var isDigest = require('is-sha-256-hex-digest')
+var validForm = require('commonform-validate').form
 var lock = require('level-lock')
 var makeProjectKey = require('../private/project-key')
+var normalize = require('commonform-normalize')
 var parseEdition = require('reviewers-edition-parse')
 
-module.exports = function putProject(publisher, project, edition, data, callback) {
+module.exports = function putProject(publisher, project, edition, form, callback) {
   var parsedEdition = parseEdition(edition)
   if (parsedEdition === false) {
     return asap(function() {
@@ -34,7 +35,7 @@ module.exports = function putProject(publisher, project, edition, data, callback
     return asap(function() {
       callback(new Error('Invalid project name')) }) }
 
-  if (!validForm(data)) {
+  if (!validForm(form)) {
     return asap(function() {
       callback(new Error('Invalid form')) }) }
 
@@ -54,21 +55,23 @@ module.exports = function putProject(publisher, project, edition, data, callback
           unlock()
           callback(new Error('Already exists')) }
         else {
-          var formKey = makeFormKey(data, publisher, project, edition)
-          levelup
-            .batch()
-            .put(formKey, JSON.stringify(
+          var normalized = normalize(form)
+          var root = normalized.root
+          var digests = Object.keys(normalized)
+            .filter(function(key) { return key !== 'root' })
+          var batch = levelup.batch()
+          batch.put(projectKey, root)
+          digests.forEach(function(digest) {
+            batch.put(
+              makeFormKey(digest, publisher, project, edition),
               { publisher: publisher,
                 project: project,
                 edition: edition,
-                form: data }))
-            .put(projectKey, data)
-            .write(function(error) {
-              unlock()
-              callback(error) }) } } }) } }
-
-function validForm(argument) {
-  return isDigest(argument) }
+                root: ( digest === root ),
+                digest: digest }) })
+          batch.write(function(error) {
+            unlock()
+            callback(error) }) } } }) } }
 
 function validPublisher(argument) {
   return (

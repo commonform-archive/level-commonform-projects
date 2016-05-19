@@ -27,4 +27,5 @@ tape('Race to Put a Project', function(test) {
         error.message, 'Already exists',
         'later puts fail') }) }
   function put(callback) {
-    level.putProject('ari', 'nda', '1e', 'a'.repeat(64), callback) } })
+    var form = { content: [ 'A test form' ] }
+    level.putProject('ari', 'nda', '1e', form, callback) } })

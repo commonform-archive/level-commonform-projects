@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+var normalize = require('commonform-normalize')
 var testStore = require('./store')
 var tape = require('tape')
 var series = require('async-series')
@@ -20,28 +21,30 @@ var series = require('async-series')
 tape('Get Projects for Form', function(test) {
   test.plan(5)
   var level = testStore()
+  var form = { content: [ 'A test form' ] }
+  var digest = normalize(form).root
   series(
     [ function(done) {
-        level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
+        level.putProject('ari', 'nda', '1e', form, function(error) {
           test.ifError(error, 'no putProject() error')
           done() }) },
       function(done) {
-        level.putProject('ben', 'nda', '2e', 'a'.repeat(64), function(error) {
+        level.putProject('ben', 'nda', '2e', form, function(error) {
           test.ifError(error, 'no putProject() error')
           done() }) },
       function(done) {
-        level.getProjects('a'.repeat(64), function(error, fetchedData) {
+        level.getProjects(digest, function(error, fetchedData) {
           test.ifError(error, 'no getProjects() error')
           test.same(
             fetchedData,
             [ { publisher: 'ari',
                 project: 'nda',
                 edition: '1e',
-                form: 'a'.repeat(64) },
+                form: digest },
               { publisher: 'ben',
                 project: 'nda',
                 edition: '2e',
-                form: 'a'.repeat(64) } ],
+                form: digest } ],
             'getProjects() lists matching project') })
         done() } ],
     function(error) {

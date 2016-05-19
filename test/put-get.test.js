@@ -13,13 +13,16 @@
  * limitations under the License.
  */
 
+var normalize = require('commonform-normalize')
 var testStore = require('./store')
 var tape = require('tape')
 
 tape('Put and Get a Project', function(test) {
   test.plan(3)
   var level = testStore()
-  level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
+  var form = { content: [ 'A test form' ] }
+  var digest = normalize(form).root
+  level.putProject('ari', 'nda', '1e', form, function(error) {
     test.ifError(error, 'no putProject() error')
     level.getProject('ari', 'nda', '1e', function(error, fetechedForm) {
       test.ifError(error, 'no getProject() error')
@@ -28,5 +31,5 @@ tape('Put and Get a Project', function(test) {
         { publisher: 'ari',
           project: 'nda',
           edition: '1e',
-          form: 'a'.repeat(64) },
+          digest: digest },
         'getProject() yields the project back') }) }) })

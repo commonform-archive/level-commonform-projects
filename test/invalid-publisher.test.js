@@ -19,7 +19,8 @@ var tape = require('tape')
 tape('Invalid Publisher', function(test) {
   test.plan(1)
   var level = testStore()
-  level.putProject(null, 'nda', '1e', 'a'.repeat(64), function(error) {
+  var form = { content: [ 'A test form' ] }
+  level.putProject(null, 'nda', '1e', form, function(error) {
     test.same(
       error.message, 'Invalid publisher name',
       'calls back with an error') }) })

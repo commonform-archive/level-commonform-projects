@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+var normalize = require('commonform-normalize')
 var testStore = require('./store')
 var tape = require('tape')
 var series = require('async-series')
@@ -20,13 +21,16 @@ var series = require('async-series')
 tape('Get Current Project', function(test) {
   test.plan(5)
   var level = testStore()
+  var formA = { content: [ 'A test form' ] }
+  var formB = { content: [ 'Another test form' ] }
+  var formBDigest = normalize(formB).root
   series(
     [ function(done) {
-        level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
+        level.putProject('ari', 'nda', '1e', formA, function(error) {
           test.ifError(error, 'no putProject() error')
           done() }) },
       function(done) {
-        level.putProject('ari', 'nda', '1e1u', 'b'.repeat(64), function(error) {
+        level.putProject('ari', 'nda', '1e1u', formB, function(error) {
           test.ifError(error, 'no putProject() error')
           done() }) },
       function(done) {
@@ -37,7 +41,7 @@ tape('Get Current Project', function(test) {
             { publisher: 'ari',
               project: 'nda',
               edition: '1e1u',
-              form: 'b'.repeat(64) },
+              form: formBDigest },
             'getCurrentEdition() yields current edition') })
         done() } ],
     function(error) {

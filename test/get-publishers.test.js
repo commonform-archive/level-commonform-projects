@@ -20,13 +20,15 @@ var series = require('async-series')
 tape('Get Publishers', function(test) {
   test.plan(5)
   var level = testStore()
+  var formA = { content: [ 'A test form' ] }
+  var formB = { content: [ 'Another test form' ] }
   series(
     [ function(done) {
-        level.putProject('ari', 'nda', '1e', 'a'.repeat(64), function(error) {
+        level.putProject('ari', 'nda', '1e', formA, function(error) {
           test.ifError(error, 'no putProject() error')
           done() }) },
       function(done) {
-        level.putProject('bob', 'psa', '1e1u', 'b'.repeat(64), function(error) {
+        level.putProject('bob', 'psa', '1e1u', formB, function(error) {
           test.ifError(error, 'no putProject() error')
           done() }) },
       function(done) {

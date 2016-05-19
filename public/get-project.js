@@ -28,5 +28,5 @@ module.exports = function getProject(publisher, project, edition, callback) {
         publisher: publisher,
         project: project,
         edition: edition,
-        form: data }
+        digest: data }
       callback(null, result) } }) }

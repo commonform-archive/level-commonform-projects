@@ -6,6 +6,8 @@
   "dependencies": {
     "asap": "^2.0.3",
     "bytewise": "^1.1.0",
+    "commonform-normalize": "^0.5.2",
+    "commonform-validate": "^0.6.2",
     "is-sha-256-hex-digest": "^1.0.0",
     "level-lock": "^1.0.1",
     "reviewers-edition-compare": "^1.0.4",
